@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from post.models import Post
 
 class PostViewSet(viewsets.ViewSet):
-    def get(self, request):
+    def list(self, request):
         queryset = Post.objects.all()
         serializer_class = PostSerializer(queryset, many=True)
         return Response(serializer_class.data)
@@ -16,28 +16,26 @@ class PostViewSet(viewsets.ViewSet):
             return Response(serializer_class.data)
         return Response({'error': 'INVALID REQUEST'})
 
-class DetailViewSet(viewsets.ViewSet):
-
-    def get(self, request, pk):
-        post = Post.objects.get(id = pk)
+    def get(self, request, pk=None):
+        post = Post.objects.get(pk = pk)
         serializer_class = PostSerializer(post)
         return Response(serializer_class.data)
     
-    def delete(self, request, pk):
-        post = Post.objects.get(id=pk)
+    def delete(self, request, pk=None):
+        post = Post.objects.get(pk=pk)
         serializer_class = PostSerializer(post)
         password = request.data.get('password', None)
         if password == post.password:
             post.delete()
-            return Response(serializer_class.data)
-        return Response({"error": "INVALID PASSWORD"})
+            return Response({"message":"success"})
+        return Response({"error": "invalid password"})
 
-    def update(self, request, pk):
-        post = Post.objects.get(id=pk)
+    def update(self, request, pk=None):
+        post = Post.objects.get(pk=pk)
         author = request.data.get('author', post.author)
         title = request.data.get('title', post.title)
         content = request.data.get('content', post.content)
-        password = request.data.get('password', None)
+        password = request.data.get('password', none)
         if password == post.password:
             post.author = author
             post.title = title
@@ -45,4 +43,7 @@ class DetailViewSet(viewsets.ViewSet):
             post.save()
             serializer_class = PostSerializer(post)
             return Response(serializer_class.data)
-        return Response({'error': 'INVALID PASSWORD'})
+        return Response({'error': 'invalid password'})
+    
+
+    

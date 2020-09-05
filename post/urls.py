@@ -1,7 +1,10 @@
-from django.urls import path
-from post.views import PostViewSet, DetailViewSet
-
-urlpatterns = [
-        path('', PostViewSet.as_view({'get':'get', 'post':'create'})), 
-        path('/<int:pk>', DetailViewSet.as_view({'get':'get', 'delete':'delete', 'put':'update'})),
-]
+# from django.urls import path
+# from post.views import PostViewSet
+# from rest_framework.routers import DefaultRouter
+# 
+# router = DefaultRouter()
+# router.register(r'posts', PostViewSet, basename='user')
+# urlpatterns = router.urls
+# urlpatterns = [
+#         path('', PostViewSet.as_view({'get':'list', 'post':'create','get':'get', 'delete':'delete', 'put':'update'}))
+# ]
