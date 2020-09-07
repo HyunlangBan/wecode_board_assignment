@@ -16,26 +16,26 @@ class PostViewSet(viewsets.ViewSet):
             return Response(serializer_class.data)
         return Response({'error': 'INVALID REQUEST'})
 
-    def get(self, request, pk=None):
+    def get(self, request, pk):
         post = Post.objects.get(pk = pk)
         serializer_class = PostSerializer(post)
         return Response(serializer_class.data)
     
-    def delete(self, request, pk=None):
+    def delete(self, request, pk):
         post = Post.objects.get(pk=pk)
         serializer_class = PostSerializer(post)
-        password = request.data.get('password', None)
-        if password == post.password:
-            post.delete()
-            return Response({"message":"success"})
-        return Response({"error": "invalid password"})
+        #password = request.data.get('password', None)
+        #if password == post.password:
+        post.delete()
+        return Response({"message":"success"})
+        #return Response({"error": "invalid password"})
 
-    def update(self, request, pk=None):
+    def update(self, request, pk):
         post = Post.objects.get(pk=pk)
         author = request.data.get('author', post.author)
         title = request.data.get('title', post.title)
         content = request.data.get('content', post.content)
-        password = request.data.get('password', none)
+        password = request.data.get('password', None)
         if password == post.password:
             post.author = author
             post.title = title
